@@ -6,9 +6,7 @@ package decisiontree;
 public class ConfusionMatrix {
 
     public ConfusionMatrix() {
-
+        //TODO: Add implementation
     }
-
-
 
 }
