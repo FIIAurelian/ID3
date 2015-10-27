@@ -14,7 +14,7 @@ public class Node {
 	
 	private boolean terminal;
 	private String label;
-	private List<Pair<Attribute, Node>> childs = new ArrayList<Pair<Attribute, Node>>(); 
+	private List<Pair<Attribute, Node>> children = new ArrayList<Pair<Attribute, Node>>();
 	
 	public Node() {
 		this.terminal = false;
@@ -37,7 +37,7 @@ public class Node {
 	}
 	
 	public void addChildren( Pair<Attribute, Node> pair ) {
-		childs.add( pair );
+		children.add(pair);
 	}
 	
 	public void addChildren( Attribute attribute, Node node ) {
@@ -46,7 +46,7 @@ public class Node {
 	
 	public Node getChildrenNodeForAttribute( Attribute attribute ) {
 		Node node = null;
-		for( Pair<Attribute, Node> children: childs ) {
+		for( Pair<Attribute, Node> children: this.children) {
 			if( children.getFirst().equals( attribute ) ) {
 				node = children.getSecond();
 			}
