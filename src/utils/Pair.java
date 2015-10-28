@@ -20,4 +20,22 @@ public class Pair<F, S> {
 	public S getSecond() {
 		return this.second;
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public boolean equals( Object obj ) {
+		if( obj == null )
+			return false;
+		if( this == obj )
+			return true;
+		if( obj instanceof Pair<?, ?> )
+			return equals( ( Pair<F, S> ) obj );
+		else
+			return false;
+	}
+	
+	public boolean equals( Pair<F, S> pair ) {
+		return ( pair.getFirst().equals( first ) && pair.getSecond().equals( second ) ); 
+	}
+
 }
