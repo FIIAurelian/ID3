@@ -35,4 +35,12 @@ public class Observation {
 	public String getLabel() {
 		return label;
 	}
+	
+	public boolean matchAttribute( Attribute attribute ) {
+		Attribute attr = getAttributeByName( attribute.getName() );
+		if( attr == null )
+			return false;
+		else
+			return attr.equals( attribute );
+	}
 }
