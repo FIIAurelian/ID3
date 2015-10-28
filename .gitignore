@@ -1,5 +1,6 @@
 /ID3.iml
 *.class
+*.iml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
