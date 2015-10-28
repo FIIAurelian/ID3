@@ -9,7 +9,6 @@ import java.util.List;
 public class Observation {
 	
 	private List<Attribute> attributes = new ArrayList<Attribute>();
-	private String label;
 	
 	public Observation() {}
 	
@@ -28,12 +27,8 @@ public class Observation {
 		return result;
 	}
 	
-	public void setLabel( String label ) {
-		this.label = label;
-	}
-	
-	public String getLabel() {
-		return label;
+	public List<Attribute> getAttributes() {
+		return attributes;
 	}
 	
 	public boolean matchAttribute( Attribute attribute ) {
@@ -42,5 +37,12 @@ public class Observation {
 			return false;
 		else
 			return attr.equals( attribute );
+	}
+	
+	public String toString() {
+		String result = "";
+		for( Attribute attribute: attributes)
+			result = result + attribute + "\n";
+		return result;
 	}
 }

@@ -1,7 +1,6 @@
 package instance;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ public class Dataset {
 				}
 				result.addObservation( observation );
 			}
+			br.close();
 		} catch( IOException exception ) {
 			System.err.println( "Exception with message: " + exception.getMessage() );
 		}
