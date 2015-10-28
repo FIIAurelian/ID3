@@ -16,6 +16,15 @@ public interface PurityFunction {
      * @param attributeY the second Attribute (the outcome)
      * @return the value of the purity function for the variables
      */
-    double calculate(ConfusionMatrix confusionMatrix, Attribute attributeA, Attribute attributeY);
+    //double calculate(ConfusionMatrix confusionMatrix, Attribute attributeA, Attribute attributeY);
 
+
+    /**
+     * This function calculates the value of the purity function for the given variables
+     * It is implemented in the classes that extend this class, as only they know how to calculate each function
+     * It doesn't need the attributes as the confusionMatrix is saved for the exact two attributes used
+     * @param confusionMatrix the confusion matrix
+     * @return the value of the purity function for the variables
+     */
+    double calculate(ConfusionMatrix confusionMatrix);
 }

@@ -11,9 +11,11 @@ import java.util.List;
  */
 public class Dataset {
 	
-	private List<Observation> observations = new ArrayList<Observation>();
+	private List<Observation> observations;
 	
-	public Dataset() {}
+	public Dataset() {
+		observations = new ArrayList<Observation>();
+	}
 	
 	public void addObservation( Observation observation ) {
 		observations.add( observation );

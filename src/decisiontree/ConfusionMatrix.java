@@ -4,11 +4,18 @@ import instance.Attribute;
 import instance.Dataset;
 import instance.Observation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import utils.Pair;
 
 /**
+ *                    Predicted
+ *                A               B
+ *         A
+ * Actual --
+ *         B
  * Created by virgil on 27.10.2015.
  */
 public class ConfusionMatrix {
@@ -16,6 +23,7 @@ public class ConfusionMatrix {
 	private HashMap<Pair<String, String>, Integer> matrix;
 	private HashMap<String, Integer> columnTotal;
 	private HashMap<String, Integer> rowTotal;
+    private Integer totalCount;
 	private String columnLabel;
 	private String rowLabel;
 
@@ -40,8 +48,42 @@ public class ConfusionMatrix {
     		addValueToTotal( rowTotal, rowValue );
     		addValueToTotal( columnTotal, columnValue );
     	}
+
+        totalCount = dataset.getObservations().size();
     }
-   
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public List<String> getRowValues() {
+        List<String> rowValues = new ArrayList<>();
+
+        for (Pair<String, String> keys : matrix.keySet()) {
+            rowValues.add(keys.getFirst());
+        }
+
+        return rowValues;
+    }
+
+    public List<String> getColumnValues() {
+        List<String> columnValues = new ArrayList<>();
+
+        for (Pair<String, String> keys : matrix.keySet()) {
+            columnValues.add(keys.getSecond());
+        }
+
+        return columnValues;
+    }
+
+    public Integer getRowTotal(String rowName) {
+        return rowTotal.getOrDefault(rowName, 0);
+    }
+
+    public Integer getColumnTotal(String columnName) {
+        return columnTotal.getOrDefault(columnName, 0);
+    }
+
     public Integer getConditionalCount( String row, String column ) {
     	Pair<String, String> key = new Pair<String, String>( row, column );
     	return matrix.getOrDefault( key, 0 );
@@ -58,7 +100,7 @@ public class ConfusionMatrix {
     		return columnTotal.getOrDefault( attributeValue, 0 );
     	return 0;
     }
-    
+
     private void addValueToMatrix( String rowValue, String columnValue ) {
     	Pair<String, String> key = new Pair<String, String>( rowValue, columnValue );
     	Integer value = matrix.getOrDefault( key, 0 );
