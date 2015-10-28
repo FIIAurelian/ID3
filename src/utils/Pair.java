@@ -38,4 +38,11 @@ public class Pair<F, S> {
 		return ( pair.getFirst().equals( first ) && pair.getSecond().equals( second ) ); 
 	}
 
+	@Override
+	public String toString() {
+		return "Pair{" +
+				"first=" + first +
+				", second=" + second +
+				'}';
+	}
 }

@@ -42,9 +42,9 @@ public class ConfusionMatrix {
     
     public void setDataset( Dataset dataset ) {
     	for( Observation observation: dataset.getObservations() ) {
-    		String rowValue = observation.getAttributeByName( rowLabel ).getValue();
+            String rowValue = observation.getAttributeByName( rowLabel ).getValue();
     		String columnValue = observation.getAttributeByName( columnLabel ).getValue();
-    		addValueToMatrix( rowValue, columnValue );
+            addValueToMatrix( rowValue, columnValue );
     		addValueToTotal( rowTotal, rowValue );
     		addValueToTotal( columnTotal, columnValue );
     	}
@@ -59,8 +59,9 @@ public class ConfusionMatrix {
     public List<String> getRowValues() {
         List<String> rowValues = new ArrayList<>();
 
-        for (Pair<String, String> keys : matrix.keySet()) {
-            rowValues.add(keys.getFirst());
+        for (Pair<String, String> key : matrix.keySet()) {
+            if (!rowValues.contains(key.getFirst()))
+                rowValues.add(key.getFirst());
         }
 
         return rowValues;
@@ -69,8 +70,9 @@ public class ConfusionMatrix {
     public List<String> getColumnValues() {
         List<String> columnValues = new ArrayList<>();
 
-        for (Pair<String, String> keys : matrix.keySet()) {
-            columnValues.add(keys.getSecond());
+        for (Pair<String, String> key : matrix.keySet()) {
+            if (!columnValues.contains(key.getSecond()))
+                columnValues.add(key.getSecond());
         }
 
         return columnValues;
@@ -86,7 +88,14 @@ public class ConfusionMatrix {
 
     public Integer getConditionalCount( String row, String column ) {
     	Pair<String, String> key = new Pair<String, String>( row, column );
-    	return matrix.getOrDefault( key, 0 );
+
+        for (Pair<String, String> element : matrix.keySet()) {
+            if (element.equals(key))
+                return matrix.get(element);
+        }
+        return 0;
+
+        //return matrix.getOrDefault( key, 0 );
     }
     
     public Integer getCount( Attribute attribute ) {
@@ -105,12 +114,38 @@ public class ConfusionMatrix {
     	Pair<String, String> key = new Pair<String, String>( rowValue, columnValue );
     	Integer value = matrix.getOrDefault( key, 0 );
     	value = value + 1;
-    	matrix.put( key, value );
+        matrix.put(key, value);
     }
     
     private void addValueToTotal( HashMap<String, Integer> hashMap, String key ) {
     	Integer value = hashMap.getOrDefault( key, 0 );
+        value = value + 1;
     	hashMap.put( key, value );
     }
 
+    @Override
+    public String toString() {
+        StringBuilder returnString = new StringBuilder();
+
+        List<String> rowValues = getRowValues();
+        List<String> columnValues = getColumnValues();
+        for (int i = 0; i < rowValues.size(); ++i) {
+            String row = rowValues.get(i);
+            for (int j = 0; j < columnValues.size(); ++j) {
+                String column = columnValues.get(j);
+                Integer count = getConditionalCount(row, column);
+                returnString.append(count + " ");
+            }
+            returnString.append(", ");
+        }
+
+        return "ConfusionMatrix{" +
+                "matrix=" + returnString.toString() +
+                "columnTotal=" + columnTotal +
+                ", rowTotal=" + rowTotal +
+                ", totalCount=" + totalCount +
+                ", columnLabel='" + columnLabel + '\'' +
+                ", rowLabel='" + rowLabel + '\'' +
+                '}';
+    }
 }

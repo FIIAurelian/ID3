@@ -58,5 +58,16 @@ public class Dataset {
 				result.addObservation( observation );
 		return result;
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuffer returnString = new StringBuffer();
+
+		for (Observation observation : observations)
+			returnString.append(observation.toString() + " ");
+
+		return "Dataset{" +
+				"observations=" + observations +
+				'}';
+	}
 }
