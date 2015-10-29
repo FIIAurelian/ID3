@@ -47,6 +47,10 @@ public class Node {
 		this.addChildren( new Pair<Attribute, Node>( attribute, node ) );
 	}
 	
+	public List<Pair<Attribute, Node>> getChilds() {
+		return children;
+	}
+	
 	public Node getChildrenNodeForAttribute( Attribute attribute ) {
 		Node node = null;
 		for( Pair<Attribute, Node> children: this.children) {
@@ -55,6 +59,15 @@ public class Node {
 			}
 		}
 		return node;
+	}
+	
+	public void showNode(String prefix) {
+		if( terminal == true )
+			System.out.println(prefix + "Decision: " + label);
+		for( Pair<Attribute, Node> child: children ) {
+			System.out.println(prefix + child.getFirst().getName() + "=" + child.getFirst().getValue());
+			child.getSecond().showNode(prefix + " ");
+		}
 	}
 
 	public static Node createNode( Dataset dataset, String labelName ) {
@@ -68,6 +81,7 @@ public class Node {
 		
 		Observation observation = dataset.getObservations().get( 0 );
 		for( Attribute attribute: observation.getAttributes() ) {
+			if( labelName.equals( attribute.getName() ) )continue;
 			ConfusionMatrix cm = new ConfusionMatrix( dataset, attribute.getName(), labelName );
 			if( cm.isUseless() )continue;
 			foundAttribute = true;
@@ -79,7 +93,18 @@ public class Node {
 			}
 		}
 		
-		
+		if( foundAttribute == false || singleLabel == true ) {
+			node.terminal = true;
+			node.label = dataset.majorityValueForAttribute( labelName );
+		} else {
+			List<String> attributeValues = dataset.getDistinctValuesForAttribute( attributeName );
+			for( String attributeValue: attributeValues ) {
+				Attribute attribute = new Attribute( attributeName, attributeValue );
+				Dataset sonDataset = Dataset.splitDatasetByAttribute( dataset, attribute );
+				Node son = createNode( sonDataset, labelName );
+				node.children.add( new Pair<Attribute, Node>( attribute, son ) );
+			}
+		}
 		
 		return node;
 	}

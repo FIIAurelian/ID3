@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIIAurelian
@@ -47,6 +50,42 @@ public class Dataset {
 			br.close();
 		} catch( IOException exception ) {
 			System.err.println( "Exception with message: " + exception.getMessage() );
+		}
+		return result;
+	}
+	
+	public String majorityValueForAttribute( String attributeName ) {
+		HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
+		for( Observation observation: observations ) {
+			Attribute attribute = observation.getAttributeByName( attributeName );
+			if( attribute != null ) {
+				Integer value = hashMap.getOrDefault( attribute.getValue(), 0 );
+				value = value + 1;
+				hashMap.put( attribute.getValue(), value );
+			}
+		}
+		
+		String result = "";
+		int count = -1;
+		for( Map.Entry<String, Integer> entry: hashMap.entrySet() )
+			if( entry.getValue() > count ) {
+				count = entry.getValue();
+				result = entry.getKey();
+			}
+		return result;
+	}
+	
+	public List<String> getDistinctValuesForAttribute( String attributeName ) {
+		HashSet<String> hashSet = new HashSet<String>();
+		List<String> result = new ArrayList<String>();
+		for( Observation observation: observations ) {
+			Attribute attribute = observation.getAttributeByName( attributeName );
+			if( attribute != null ) {
+				if( hashSet.contains( attribute.getValue() ) == false ) {
+					hashSet.add( attribute.getValue() );
+					result.add( attribute.getValue() );
+				}
+			}
 		}
 		return result;
 	}

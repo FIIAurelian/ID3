@@ -9,7 +9,7 @@ import decisiontree.ConfusionMatrix;
  */
 public class MainClass {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ConfusionMatrix confusionMatrix;
         Dataset dataset = new Dataset();
         Observation observation1 = new Observation();
@@ -38,6 +38,6 @@ public class MainClass {
         Entropy entropy = new Entropy();
         double entropyValue = entropy.calculate(confusionMatrix);
         System.out.println(entropyValue);
-    }
+    }*/
 
 }

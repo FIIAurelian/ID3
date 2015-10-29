@@ -19,7 +19,7 @@ public class Entropy implements PurityFunction {
         for (String row : confusionMatrix.getRowValues()) {
             double rowEntropy = 0.0;
             for (String column : confusionMatrix.getColumnValues()) {
-                System.out.println("Entropy.calculate: " + row + " " + column + " " + confusionMatrix.getConditionalCount(row, column) + " / " + confusionMatrix.getRowTotal(row));
+                //System.out.println("Entropy.calculate: " + row + " " + column + " " + confusionMatrix.getConditionalCount(row, column) + " / " + confusionMatrix.getRowTotal(row));
                 if (confusionMatrix.getConditionalCount(row, column) != 0) {
                     rowEntropy += (confusionMatrix.getConditionalCount(row, column) + 0.0) / (confusionMatrix.getRowTotal(row) + 0.0) * (Math.log((confusionMatrix.getRowTotal(row) + 0.0) / (confusionMatrix.getConditionalCount(row, column) + 0.0)) / Math.log(2));
                 }
