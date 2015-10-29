@@ -88,14 +88,7 @@ public class ConfusionMatrix {
 
     public Integer getConditionalCount( String row, String column ) {
     	Pair<String, String> key = new Pair<String, String>( row, column );
-
-        for (Pair<String, String> element : matrix.keySet()) {
-            if (element.equals(key))
-                return matrix.get(element);
-        }
-        return 0;
-
-        //return matrix.getOrDefault( key, 0 );
+        return matrix.getOrDefault( key, 0 );
     }
     
     public Integer getCount( Attribute attribute ) {
@@ -122,6 +115,8 @@ public class ConfusionMatrix {
         value = value + 1;
     	hashMap.put( key, value );
     }
+    
+    
 
     @Override
     public String toString() {

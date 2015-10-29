@@ -37,6 +37,11 @@ public class Pair<F, S> {
 	public boolean equals( Pair<F, S> pair ) {
 		return ( pair.getFirst().equals( first ) && pair.getSecond().equals( second ) ); 
 	}
+	
+	@Override
+	public int hashCode() {
+		return first.hashCode() + second.hashCode();
+	}
 
 	@Override
 	public String toString() {
