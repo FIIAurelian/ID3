@@ -10,16 +10,16 @@ public class Tree {
 	
 	private Node root;
 	
-	public Tree() {}
+	private Tree() {}
 	
 	public String evaluate( Observation observation ) {
 		//TODO: stub method
 		return null;
 	}
 	
-	public static Tree construct( Dataset dataset ) {
-		//TODO: stub method
-		return null;
+	public static Tree construct( String path, String labelName ) {
+		Tree tree = new Tree();
+		Dataset dataset = Dataset.loadFromCsv( path, "," );
 	}
 
 }

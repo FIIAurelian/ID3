@@ -1,10 +1,13 @@
 package decisiontree;
 
 import instance.Attribute;
+import instance.Dataset;
+import instance.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import purityfunction.Entropy;
 import utils.Pair;
 
 /**
@@ -54,5 +57,30 @@ public class Node {
 		return node;
 	}
 
-	
+	public static Node createNode( Dataset dataset, String labelName ) {
+		Node node = new Node();
+		
+		Entropy entropy = new Entropy();
+		Double minimumEntropy = Double.MAX_VALUE;
+		String attributeName = "";
+		boolean singleLabel = false;
+		boolean foundAttribute = false;
+		
+		Observation observation = dataset.getObservations().get( 0 );
+		for( Attribute attribute: observation.getAttributes() ) {
+			ConfusionMatrix cm = new ConfusionMatrix( dataset, attribute.getName(), labelName );
+			if( cm.isUseless() )continue;
+			foundAttribute = true;
+			Double currentEntropy = entropy.calculate( cm );
+			if( minimumEntropy > currentEntropy ) {
+				minimumEntropy = currentEntropy;
+				attributeName = attribute.getName();
+				singleLabel = false | cm.isSameLabel();
+			}
+		}
+		
+		
+		
+		return node;
+	}
 }

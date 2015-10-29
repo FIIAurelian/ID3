@@ -1,7 +1,6 @@
 package purityfunction;
 
 import decisiontree.ConfusionMatrix;
-import instance.Attribute;
 
 /**
  * Created by virgil on 27.10.2015.

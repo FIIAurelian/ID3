@@ -7,6 +7,7 @@ import instance.Observation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import utils.Pair;
 
@@ -116,7 +117,35 @@ public class ConfusionMatrix {
     	hashMap.put( key, value );
     }
     
+    public boolean isUseless() {
+    	int count = 0;
+    	for( Map.Entry<String, Integer> entry: rowTotal.entrySet() ) {
+    		if( entry.getValue() > 0 )
+    			count = count + 1;
+    	}
+    	return ( count == 1 );
+    }
     
+    public boolean isSameLabel() {
+    	int count = 0;
+    	for( Map.Entry<String, Integer> entry: columnTotal.entrySet() ) {
+    		if( entry.getValue() > 0 )
+    			count = count + 1;
+    	}
+    	return ( count == 1 );
+    }
+    
+    public String majorityLabel() {
+    	int count = -1;
+    	String label = "";
+    	for( Map.Entry<String, Integer> entry: columnTotal.entrySet() ) {
+    		if( entry.getValue() > count ) {
+    			count = entry.getValue();
+    			label = entry.getKey();
+    		}
+    	}
+    	return label;
+    }
 
     @Override
     public String toString() {

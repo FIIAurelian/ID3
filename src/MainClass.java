@@ -1,9 +1,8 @@
-import decisiontree.ConfusionMatrix;
 import instance.Attribute;
 import instance.Dataset;
 import instance.Observation;
 import purityfunction.Entropy;
-import utils.Pair;
+import decisiontree.ConfusionMatrix;
 
 /**
  * Created by virgil on 28.10.2015.
